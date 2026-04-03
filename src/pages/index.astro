@@ -1,0 +1,115 @@
+---
+// src/pages/index.astro
+// ─────────────────────────────────────────────────────────────
+// Main page. Imports all section components and assembles the
+// portfolio in a single, smooth-scrolling page layout.
+// ─────────────────────────────────────────────────────────────
+
+import Layout      from '@/layouts/Layout.astro';
+import Navigation  from '@/components/Navigation.astro';
+import Hero        from '@/components/Hero.astro';
+import Skills      from '@/components/Skills.astro';
+import Projects    from '@/components/Projects.astro';
+import Experience  from '@/components/Experience.astro';
+import Resume      from '@/components/Resume.astro';
+import Contact     from '@/components/Contact';   // React component
+import Footer      from '@/components/Footer.astro';
+
+import { seo, personal } from '@/data/config';
+---
+
+<Layout title={seo.title} description={seo.description}>
+
+  <!-- ── Sticky navigation ── -->
+  <Navigation />
+
+  <!-- ── Main content ── -->
+  <main>
+
+    <!-- 1. Hero ─────────────────────────────────────────────── -->
+    <Hero />
+
+    <!-- Divider -->
+    <div class="relative max-w-7xl mx-auto px-6">
+      <div class="h-px bg-gradient-to-r from-transparent via-indigo-900/60 to-transparent"></div>
+    </div>
+
+    <!-- 2. Skills ────────────────────────────────────────────── -->
+    <Skills />
+
+    <!-- Divider -->
+    <div class="relative max-w-7xl mx-auto px-6">
+      <div class="h-px bg-gradient-to-r from-transparent via-indigo-900/60 to-transparent"></div>
+    </div>
+
+    <!-- 3. Projects ──────────────────────────────────────────── -->
+    <Projects />
+
+    <!-- Divider -->
+    <div class="relative max-w-7xl mx-auto px-6">
+      <div class="h-px bg-gradient-to-r from-transparent via-violet-900/60 to-transparent"></div>
+    </div>
+
+    <!-- 4. Experience ────────────────────────────────────────── -->
+    <Experience />
+
+    <!-- Divider -->
+    <div class="relative max-w-7xl mx-auto px-6">
+      <div class="h-px bg-gradient-to-r from-transparent via-indigo-900/60 to-transparent"></div>
+    </div>
+
+    <!-- 5. Resume ────────────────────────────────────────────── -->
+    <Resume />
+
+    <!-- Divider -->
+    <div class="relative max-w-7xl mx-auto px-6">
+      <div class="h-px bg-gradient-to-r from-transparent via-violet-900/60 to-transparent"></div>
+    </div>
+
+    <!-- 6. Contact (React island for interactive form) ──────── -->
+    <Contact
+      client:load
+      email={personal.email}
+      github={personal.github}
+      linkedin={personal.linkedin}
+      fullName={personal.fullName}
+      availability={personal.availability}
+    />
+
+  </main>
+
+  <!-- ── Footer ── -->
+  <Footer />
+
+  <!-- Back to top button -->
+  <button
+    id="back-to-top"
+    aria-label="Back to top"
+    class="fixed bottom-8 right-8 z-40 p-3 rounded-xl glass border border-white/10 text-slate-400 hover:text-white hover:border-indigo-500/40 transition-all duration-300 opacity-0 translate-y-4 pointer-events-none hover:shadow-glow-sm"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-4.5 w-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+    </svg>
+  </button>
+
+  <script>
+    // Back to top visibility
+    const btn = document.getElementById('back-to-top');
+    window.addEventListener('scroll', () => {
+      const show = window.scrollY > 600;
+      btn?.classList.toggle('opacity-0',      !show);
+      btn?.classList.toggle('translate-y-4',  !show);
+      btn?.classList.toggle('pointer-events-none', !show);
+    }, { passive: true });
+
+    btn?.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
+
+  <style>
+    /* Smooth scroll sections */
+    main section { scroll-margin-top: 80px; }
+  </style>
+
+</Layout>

@@ -1,0 +1,64 @@
+---
+// src/components/SkillBadge.astro
+// Reusable skill badge. Accepts a Skill object from config.ts.
+import type { Skill } from '@/data/config';
+
+interface Props {
+  skill: Skill;
+  size?: 'sm' | 'md' | 'lg';
+}
+
+const { skill, size = 'md' } = Astro.props;
+
+const sizeMap = {
+  sm: 'px-3 py-1.5 text-xs gap-1.5',
+  md: 'px-4 py-2 text-sm gap-2',
+  lg: 'px-5 py-3 text-base gap-2.5',
+};
+const iconMap = {
+  sm: 'w-3.5 h-3.5',
+  md: 'w-4 h-4',
+  lg: 'w-5 h-5',
+};
+---
+
+<div
+  class:list={[
+    'skill-badge group relative inline-flex items-center font-medium rounded-xl',
+    'glass-light border border-white/10 cursor-default select-none',
+    'transition-all duration-300 hover:border-white/20 hover:bg-white/5',
+    sizeMap[size],
+  ]}
+  style={`--skill-color: ${skill.color};`}
+  title={`${skill.name} — ${skill.category}`}
+>
+  <!-- Glow on hover -->
+  <span
+    class="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+    style={`box-shadow: 0 0 16px ${skill.color}33, inset 0 0 16px ${skill.color}08;`}
+  ></span>
+
+  <!-- SVG Icon -->
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    class:list={['flex-shrink-0 transition-colors duration-300', iconMap[size]]}
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    style={`color: ${skill.color};`}
+    aria-hidden="true"
+  >
+    <path d={skill.icon} />
+  </svg>
+
+  <!-- Name -->
+  <span class="relative text-slate-300 group-hover:text-white transition-colors duration-300">
+    {skill.name}
+  </span>
+
+  <!-- Category chip (shown on hover) -->
+  <span
+    class="absolute -top-6 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded-md text-[10px] font-medium bg-void border border-white/10 text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-10"
+  >
+    {skill.category}
+  </span>
+</div>
