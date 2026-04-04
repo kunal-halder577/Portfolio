@@ -47,13 +47,13 @@ export default function Contact({ email, github, linkedin, fullName, availabilit
   const linkedinHandle = linkedin.replace('https://www.linkedin.com/', 'linkedin.com/').replace('https://linkedin.com/', 'linkedin.com/');
 
   return (
-    <section id="contact" className="relative py-28 px-6">
+    <section id="contact" className="relative py-16 md:py-28 px-6">
       <div className="max-w-7xl mx-auto">
 
         {/* Section header */}
         <div className="mb-16 text-center reveal">
           <p className="text-indigo-400 font-medium text-sm tracking-widest uppercase mb-3">Get In Touch</p>
-          <h2 className="font-display text-5xl md:text-6xl font-semibold text-white mb-4">
+          <h2 className="font-display text-4xl md:text-6xl font-semibold text-white mb-4">
             Contact Me
           </h2>
           <p className="text-slate-400 text-lg max-w-lg mx-auto leading-relaxed">

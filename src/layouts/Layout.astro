@@ -200,9 +200,12 @@ const {
       const ctx    = canvas?.getContext('2d');
 
       if (canvas && ctx) {
+        let lastWidth = window.innerWidth;
         const resize = () => {
+          if (window.innerWidth <= 1024 && window.innerWidth === lastWidth && canvas.width !== 0) return;
           canvas.width  = window.innerWidth;
           canvas.height = window.innerHeight;
+          lastWidth = window.innerWidth;
         };
         resize();
         window.addEventListener('resize', resize, { passive: true });
@@ -213,7 +216,8 @@ const {
         const STAR_COUNT = Math.min(300, Math.floor(window.innerWidth / 4));
         const RING_COUNT = window.innerWidth > 768 ? 1200 : 600; 
 
-        const EVENT_HORIZON_RADIUS = 110;
+        // Scale down black hole on mobile for better fit
+        const EVENT_HORIZON_RADIUS = window.innerWidth <= 768 ? 70 : 110;
 
         // Init Stars
         for (let i = 0; i < STAR_COUNT; i++) {
@@ -368,8 +372,8 @@ const {
           ctx.beginPath();
           ctx.arc(cx, cy, EVENT_HORIZON_RADIUS, 0, Math.PI * 2);
           ctx.fillStyle = '#000000';
-          // Outer intense white photon ring
-          ctx.shadowBlur = 50;
+          // Outer intense white photon ring (reduce glow bleed on mobile for text readability)
+          ctx.shadowBlur = window.innerWidth <= 768 ? 30 : 50;
           ctx.shadowColor = '#ffffff'; 
           ctx.fill();
           
