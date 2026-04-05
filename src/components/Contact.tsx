@@ -47,7 +47,7 @@ export default function Contact({ email, github, linkedin, fullName, availabilit
   const linkedinHandle = linkedin.replace('https://www.linkedin.com/', 'linkedin.com/').replace('https://linkedin.com/', 'linkedin.com/');
 
   return (
-    <section id="contact" className="relative py-16 md:py-28 px-6">
+    <section id="contact" className="relative py-16 md:py-28 px-6 overflow-hidden">
       <div className="max-w-7xl mx-auto">
 
         {/* Section header */}
