@@ -30,11 +30,28 @@ export default function Contact({ email, github, linkedin, fullName, availabilit
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus('sending');
-    // ── Replace with your real endpoint (Formspree, Resend, etc.) ──
-    await new Promise(r => setTimeout(r, 1800));
-    setStatus('success');
-    setForm({ name: '', email: '', message: '' });
-    setTimeout(() => setStatus('idle'), 4000);
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(form),
+      });
+
+      if (!response.ok) {
+        throw new Error('Error sending email');
+      }
+
+      setStatus('success');
+      setForm({ name: '', email: '', message: '' });
+    } catch (error) {
+      console.error('Submission failed:', error);
+      setStatus('error');
+    } finally {
+      setTimeout(() => setStatus('idle'), 4000);
+    }
   };
 
   const inputBase =
